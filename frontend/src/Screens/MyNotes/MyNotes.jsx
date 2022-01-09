@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import notes from "../../notes";
+import axios from "axios";
 
 const MyNotes = () => {
+  const [notesData, setNotesData] = useState([]);
+
   const deleteHandler = () => {
     if (window.confirm("Are you Sure...?"));
   };
+
+  const fetchNotes = async () => {
+    const { data } = await axios.get("/api/notes");
+    setNotesData(data);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
     <div>
@@ -29,7 +41,7 @@ const MyNotes = () => {
       <div className="mx-auto container py-10">
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {/* Mapping Cards */}
-          {notes.map((note) => (
+          {notesData.map((note) => (
             <div
               key={note._id}
               className="w-full h-64 flex flex-col justify-between dark:bg-gray-800 bg-white dark:border-gray-700 rounded-lg border border-gray-400 mb-6 py-5 px-4"
