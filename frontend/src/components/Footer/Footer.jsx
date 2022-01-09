@@ -11,7 +11,7 @@ const Footer = () => {
           <p className="text-white">Made with ♥ by Utkarsh</p>
           <div className="flex mt-3 -mx-2 sm:mt-0">
             <a
-              href="#"
+              href=" "
               className="mx-2 text-sm text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
               aria-label="Reddit"
             >
@@ -19,7 +19,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="#"
+              href=" "
               className="mx-2 text-sm text-gray-400 hover:text-gray-500 dark:hover:text-gray-300"
               aria-label="Reddit"
             >

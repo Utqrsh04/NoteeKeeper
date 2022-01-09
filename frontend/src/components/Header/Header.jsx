@@ -1,10 +1,21 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { logout } from "../../actions/userActions";
 import "./Header.css";
 
 const Header = () => {
   const history = useHistory();
 
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log(userInfo);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    history.push("/");
+  };
   return (
     <>
       {/* <!-- component --> */}
@@ -163,10 +174,7 @@ const Header = () => {
                         <a
                           href=" "
                           tabIndex="3"
-                          onClick={() => {
-                            localStorage.removeItem("userInfo");
-                            history.push("/");
-                          }}
+                          onClick={logoutHandler}
                           className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
                           role="menuitem"
                         >

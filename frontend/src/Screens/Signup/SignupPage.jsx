@@ -1,8 +1,9 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/userActions";
 
 const SignupPage = () => {
   const [name, setName] = useState("");
@@ -14,56 +15,35 @@ const SignupPage = () => {
   const [message, setMessage] = useState(null);
   const [imageMessage, setImageMessage] = useState(null);
 
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) history.push("/mynotes");
+  }, [history, userInfo]);
 
   const submitHandler = async (e) => {
-    setError(false);
     e.preventDefault();
 
-    if (imageMessage !== null) return;
-
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match ");
+      setMessage("Passwords do not match");
     } else {
-      setMessage(null);
-
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-
-        setLoading(true);
-
-        const { data } = await axios.post(
-          "/api/users/signup",
-          {
-            name,
-            email,
-            password,
-            image,
-          },
-          config
-        );
-
-        console.log("Data", data);
-
-        setLoading(false);
-
-        localStorage.setItem("userInfo", JSON.stringify(data));
-      } catch (error) {
-        setError(error.response.data.message);
-        setLoading(false);
-      }
+      dispatch(register(name, email, password, image));
     }
   };
-  console.log("Image ", image);
-  console.log("Image Message", imageMessage);
 
+  // image uploading
   const postDetails = (img) => {
-    if (!img) return setImageMessage("Please Select an Image");
+    if (
+      img ===
+      "https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png"
+    ) {
+      return setImageMessage("Please Select an Image");
+    }
+
     setImageMessage(null);
 
     if (img.type === "image/jpeg" || img.type === "image/png") {
@@ -77,7 +57,7 @@ const SignupPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          console.log("Image Data", data);
           setImage(data.url.toString());
         })
         .catch((err) => console.log(err));
