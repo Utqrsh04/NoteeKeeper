@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
@@ -9,12 +10,12 @@ const Header = () => {
         <div className="container mx-auto px-6  py-3 md:flex md:justify-between md:items-center">
           <div className="flex justify-between items-center">
             <div>
-              <a
+              <Link
                 className="text-gray-100 text-xl font-bold md:text-2xl hover:text-gray-700"
-                href=" "
+                to="/"
               >
                 Brand
-              </a>
+              </Link>
             </div>
 
             {/* Search input on desktop */}
@@ -64,12 +65,12 @@ const Header = () => {
           {/* <!-- Mobile Menu open: "block", Menu closed: "hidden" --> */}
           <div className="md:flex items-center">
             <div className="flex flex-col md:flex-row md:mx-6">
-              <a
+              <Link
                 className="my-1 text-sm text-gray-100 font-medium hover:text-indigo-500 md:mx-4 md:my-0"
-                href=" "
+                to="/mynotes"
               >
                 My Notes
-              </a>
+              </Link>
             </div>
 
             <div className="mt-3 md:hidden">
@@ -99,7 +100,7 @@ const Header = () => {
             </div>
 
             {/* DropDown */}
-            <div className="  flex flex-col justify-center mx-auto mt-2 md:mt-0 ">
+            <div className="z-50 relative flex flex-col justify-center mx-auto mt-2 md:mt-0 ">
               <div className="flex items-center justify-center ">
                 <div className=" relative inline-block text-left dropdown">
                   <span className="rounded-md shadow-sm">
