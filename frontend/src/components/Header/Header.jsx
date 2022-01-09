@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
+  const history = useHistory();
+
   return (
     <>
       {/* <!-- component --> */}
@@ -14,7 +16,7 @@ const Header = () => {
                 className="text-gray-100 text-xl font-bold md:text-2xl hover:text-gray-700"
                 to="/"
               >
-                Brand
+                Note Keeper
               </Link>
             </div>
 
@@ -30,9 +32,9 @@ const Header = () => {
                     <path
                       d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     ></path>
                   </svg>
                 </span>
@@ -54,7 +56,7 @@ const Header = () => {
               >
                 <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
                   ></path>
                 </svg>
@@ -84,9 +86,9 @@ const Header = () => {
                     <path
                       d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
                       stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     ></path>
                   </svg>
                 </span>
@@ -118,9 +120,9 @@ const Header = () => {
                         fill="currentColor"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         ></path>
                       </svg>
                     </button>
@@ -141,8 +143,8 @@ const Header = () => {
                       </div>
                       <div className="py-1">
                         <a
-                          href=" "
-                          tabindex="0"
+                          href="/settings"
+                          tabIndex="0"
                           className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
                           role="menuitem"
                         >
@@ -150,7 +152,7 @@ const Header = () => {
                         </a>
                         <a
                           href=" "
-                          tabindex="1"
+                          tabIndex="1"
                           className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
                           role="menuitem"
                         >
@@ -160,7 +162,11 @@ const Header = () => {
                       <div className="py-1">
                         <a
                           href=" "
-                          tabindex="3"
+                          tabIndex="3"
+                          onClick={() => {
+                            localStorage.removeItem("userInfo");
+                            history.push("/");
+                          }}
                           className="text-gray-700 flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
                           role="menuitem"
                         >

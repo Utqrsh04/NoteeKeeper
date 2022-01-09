@@ -21,9 +21,9 @@ const MyNotes = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold text-black capitalize lg:text-4xl ">
-        Welcome back{" "}
-        <span className="underline decoration-blue-500">Utkarsh </span>
+      <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl ">
+        <span className="block xl:inline">Welcome back</span>{" "}
+        <span className="block text-indigo-600 xl:inline">Utkarsh</span>
       </h1>
 
       {/* Create NewNote Button */}
