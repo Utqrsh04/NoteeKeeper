@@ -1,29 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { listNotes } from "../../actions/notesActions";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error";
 
 const MyNotes = () => {
-  const [notesData, setNotesData] = useState([]);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const noteList = useSelector((state) => state.noteList);
+  const { loading, notes, error } = noteList;
+  console.log(loading, notes, error);
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const deleteHandler = () => {
     if (window.confirm("Are you Sure...?"));
   };
 
-  const fetchNotes = async () => {
-    const { data } = await axios.get("/api/notes");
-    setNotesData(data);
-    console.log(data);
-  };
-
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    dispatch(listNotes());
+
+    if (!userInfo) {
+      history.push("/");
+    }
+  }, [dispatch]);
 
   return (
     <div>
       <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl ">
         <span className="block xl:inline">Welcome back</span>{" "}
-        <span className="block text-indigo-600 xl:inline">Utkarsh</span>
+        <span className="block text-indigo-600 xl:inline">{userInfo.name}</span>
       </h1>
 
       {/* Create NewNote Button */}
@@ -40,8 +48,10 @@ const MyNotes = () => {
       {/* Card Container */}
       <div className="mx-auto container py-10">
         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {error && <Error message={error} />}
+          {loading && <Loading />}
           {/* Mapping Cards */}
-          {notesData.map((note) => (
+          {notes?.map((note) => (
             <div
               key={note._id}
               className="w-full h-64 flex flex-col justify-between dark:bg-gray-800 bg-white dark:border-gray-700 rounded-lg border border-gray-400 mb-6 py-5 px-4"
@@ -75,7 +85,11 @@ const MyNotes = () => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between text-gray-800">
-                  <p className="dark:text-gray-100 text-sm">March 28, 2020</p>
+                  <p className="dark:text-gray-100 text-sm">
+                    {note.createdAt.split("T")[0] +
+                      " " +
+                      note.createdAt.substring(11, 19)}
+                  </p>
 
                   <div className="flex space-x-2">
                     {/* Edit Button */}
