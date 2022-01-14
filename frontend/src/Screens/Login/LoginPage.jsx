@@ -19,7 +19,7 @@ const LoginPage = () => {
     if (userInfo) history.push("/mynotes");
   }, [history, userInfo]);
 
-  const submitHandler = async (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
   };

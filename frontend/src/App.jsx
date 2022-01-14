@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import MyNotes from "./Screens/MyNotes/MyNotes";
 import LoginPage from "./Screens/Login/LoginPage";
 import SignupPage from "./Screens/Signup/SignupPage";
+import CreateNote from "./Screens/CreateNote/CreateNote";
 const App = () => (
   <>
     <BrowserRouter>
@@ -21,6 +22,10 @@ const App = () => (
         </Route>
         <Route exact path="/mynotes">
           <MyNotes />
+        </Route>
+
+        <Route exact path="/createnote">
+          <CreateNote />
         </Route>
       </div>
       <Footer />

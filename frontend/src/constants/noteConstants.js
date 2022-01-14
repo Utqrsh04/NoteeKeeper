@@ -1,4 +1,9 @@
+// Getting Notes
 export const NOTE_LIST_REQUEST = "NOTE_LIST_REQUEST";
 export const NOTE_LIST_SUCCESS = "NOTE_LIST_SUCCESS";
 export const NOTE_LIST_FAIL = "NOTE_LIST_FAIL";
 
+// Creating Notes
+export const NOTE_CREATE_REQUEST = "NOTE_CREATE_REQUEST";
+export const NOTE_CREATE_SUCCESS = "NOTE_CREATE_SUCCESS";
+export const NOTE_CREATE_FAIL = "NOTE_CREATE_FAIL";

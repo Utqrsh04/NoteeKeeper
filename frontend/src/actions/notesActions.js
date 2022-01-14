@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  NOTE_CREATE_FAIL,
+  NOTE_CREATE_REQUEST,
+  NOTE_CREATE_SUCCESS,
   NOTE_LIST_FAIL,
   NOTE_LIST_REQUEST,
   NOTE_LIST_SUCCESS,
@@ -41,3 +44,52 @@ export const listNotes = () => async (dispatch, getState) => {
     });
   }
 };
+
+export const createNote =
+  (title, content, category) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: NOTE_CREATE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      // setting headers for post request
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      // sending request
+      const { data } = await axios.post(
+        `api/notes/create`,
+        {
+          title,
+          content,
+          category,
+        },
+        config
+      );
+
+      // dispatching action when note created successfully
+      dispatch({
+        type: NOTE_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+
+      // dispatching action when error
+      dispatch({
+        type: NOTE_CREATE_FAIL,
+        payload: message,
+      });
+    }
+  };

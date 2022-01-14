@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { listNotes } from "../../actions/notesActions";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error";
+import { marked } from "marked";
 
 const MyNotes = () => {
   const history = useHistory();
@@ -15,6 +16,9 @@ const MyNotes = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const noteCreate = useSelector((state) => state.noteCreate);
+  const { success: successCreate } = noteCreate;
+
   const deleteHandler = () => {
     if (window.confirm("Are you Sure...?"));
   };
@@ -25,7 +29,7 @@ const MyNotes = () => {
     if (!userInfo) {
       history.push("/");
     }
-  }, [dispatch]);
+  }, [dispatch, history, userInfo, successCreate]);
 
   return (
     <div>
@@ -35,7 +39,7 @@ const MyNotes = () => {
       </h1>
 
       {/* Create NewNote Button */}
-      <Link to="createnote" className="inline-block">
+      <Link to="/createnote" className="inline-block">
         <button className="flex items-center px-1 py-2 mt-4 font-medium  text-white capitalize transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAoklEQVRIie2VXQrDIBCEv8acqzfokQq5VV5DjxUU+2CEZWH9SWghJANiVndmGEEDV8UKxG2sPcQJ8IKsR4a17oF3yaAkHgs8aezlwqga3Da/GsQsOFlog1boNA+rUW/UjiH3WwZR1QwVwcOwjsiM3IufJ7gNzmswi++lh9j65mRhLV7l9xg08f9+kwPpNTySIsjCqc0IPNmfLJB+Wp+d/CviCxenMK+etFDPAAAAAElFTkSuQmCC"
@@ -51,22 +55,28 @@ const MyNotes = () => {
           {error && <Error message={error} />}
           {loading && <Loading />}
           {/* Mapping Cards */}
-          {notes?.map((note) => (
+          {notes.reverse().map((note) => (
             <div
               key={note._id}
               className="w-full h-64 flex flex-col justify-between dark:bg-gray-800 bg-white dark:border-gray-700 rounded-lg border border-gray-400 mb-6 py-5 px-4"
             >
+              <h1 className="text-gray-100 font-bold -mb-7 leading-7 ">
+                {note.title}
+              </h1>
               <div>
-                <h3 className="text-gray-800 dark:text-gray-100 leading-7 font-semibold w-11/12">
-                  {note.content}
-                </h3>
+                <h3
+                  className="text-gray-800 dark:text-gray-100 leading-7 w-11/12"
+                  dangerouslySetInnerHTML={{
+                    __html: marked.parse(note.content),
+                  }}
+                ></h3>
               </div>
               <div>
                 <div className="mb-3 flex items-center">
                   <div className="border bg-green-600 border-gray-300 dark:border-gray-700 rounded-full px-3 py-1 text-white text-xs flex items-center">
                     <p className="text-white font-semibold">{note.category}</p>
                   </div>
-                  <div className="p-1 bg-gray-800 dark:bg-gray-100 rounded-full ml-2 text-yellow-500">
+                  {/* <div className="p-1 bg-gray-800 dark:bg-gray-100 rounded-full ml-2 text-yellow-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="icon icon-tabler icon-tabler-star"
@@ -82,7 +92,7 @@ const MyNotes = () => {
                       <path stroke="none" d="M0 0h24v24H0z" />
                       <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="flex items-center justify-between text-gray-800">
                   <p className="dark:text-gray-100 text-sm">
