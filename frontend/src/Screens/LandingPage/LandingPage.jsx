@@ -23,7 +23,7 @@ const LandingPage = () => {
           <p className="mt-3 text-base text-center  text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-auto">
             One safe place for all your notes.
           </p>
-          <div className="mt-5 sm:mt-8 sm:flex sm:justify-center ">
+          <div className="m-5 sm:mt-8 sm:flex sm:justify-center ">
             <Link to="/login" className="rounded-md shadow">
               <div className="w-full flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-indigo-700 md:py-3 md:text-lg md:px-10">
                 Login
