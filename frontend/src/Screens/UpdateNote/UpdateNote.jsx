@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateNoteAction } from "../../actions/notesActions";
+import { noteDeleteAction, updateNoteAction } from "../../actions/notesActions";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading/Loading";
 import { marked } from "marked";
@@ -23,6 +23,13 @@ const UpdateNote = ({ match }) => {
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { loading, error } = noteUpdate;
 
+  const noteDelete = useSelector((state) => state.noteDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = noteDelete;
+
   useEffect(() => {
     const fetching = async () => {
       const { data } = await axios.get(`/api/notes/${id}`);
@@ -33,7 +40,7 @@ const UpdateNote = ({ match }) => {
     };
 
     fetching();
-  }, [id, date]);
+  }, [id, date, successDelete]);
 
   // update handler func
   const updateHandler = (e) => {
@@ -42,17 +49,16 @@ const UpdateNote = ({ match }) => {
     if (!title || !content || !category) return;
     dispatch(updateNoteAction(id, title, content, category));
 
-    resetHandler(e);
+    deleteHandler(e);
     history.push("/mynotes");
   };
 
   // reset handler func
-  const resetHandler = (e) => {
+  const deleteHandler = (e) => {
     e.preventDefault();
-    console.log("Reset Form");
-    setTitle("");
-    setContent("");
-    setCategory("");
+    if (window.confirm("Are you Sure...?"));
+    dispatch(noteDeleteAction(id));
+    history.push("/mynotes");
   };
 
   return (
@@ -151,10 +157,10 @@ const UpdateNote = ({ match }) => {
               Update Note
             </button>
             <button
-              onClick={resetHandler}
+              onClick={deleteHandler}
               className=" mt-6 bg-indigo-300 rounded-lg px-4 py-1.5 text-md text-gray-800 tracking-wide font-semibold font-sans"
             >
-              Reset Fields
+              Delete Note
             </button>
           </div>
           <h2 className="mt-3 font-semibold text-gray-600 italic text-sm">
