@@ -21,9 +21,12 @@ const SignupPage = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo: userLoginInfo } = userLogin;
+
   useEffect(() => {
-    if (userInfo) history.push("/mynotes");
-  }, [history, userInfo]);
+    if (userLoginInfo) history.push("/mynotes");
+  }, [history, userInfo, userLoginInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
