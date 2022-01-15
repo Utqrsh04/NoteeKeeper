@@ -53,4 +53,32 @@ const authUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid Credentials!");
   }
 });
-module.exports = { registerUser, authUser };
+
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.image = req.body.image || user.image;
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      image: updatedUser.image,
+      token = generateToken(updatedUser._id)
+    });
+  }
+  else{
+    res.status(404)
+    throw new Error("User Not Found");
+  }
+});
+module.exports = { registerUser, authUser, updateUser };
