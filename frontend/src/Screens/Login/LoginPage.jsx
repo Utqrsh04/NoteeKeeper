@@ -28,7 +28,7 @@ const LoginPage = () => {
     <>
       {error && <Error message={error} />}
       {loading && <Loading />}
-      <div className="flex max-w-sm mx-auto overflow-hidden mb-10 bg-slate-800 rounded-lg shadow-lg lg:max-w-4xl">
+      <div className="flex max-w-sm mx-auto overflow-hidden mb-10 mt-10 bg-slate-800 rounded-lg shadow-lg lg:max-w-4xl">
         <div className="hidden bg-cover lg:block lg:w-1/2"></div>
 
         <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
