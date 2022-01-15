@@ -48,7 +48,7 @@ const getNoteById = expressAsyncHandler(async (req, res) => {
 
 // func to update a note
 const updateNote = expressAsyncHandler(async (req, res) => {
-  console.log("Update Note");
+  console.log("Update Note Called");
   const note_id = req.params.id;
   const { title, content, category } = req.body;
 

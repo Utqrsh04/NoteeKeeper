@@ -5,6 +5,9 @@ import {
   NOTE_LIST_FAIL,
   NOTE_LIST_REQUEST,
   NOTE_LIST_SUCCESS,
+  NOTE_UPDATE_FAIL,
+  NOTE_UPDATE_REQUEST,
+  NOTE_UPDATE_SUCCESS,
 } from "../constants/noteConstants";
 
 // reducer for getting notes list
@@ -40,19 +43,28 @@ export const noteCreateReducer = (state = {}, action) => {
       return { loading: false, success: true };
 
     case NOTE_CREATE_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, error: action.payload, success: false };
 
     default:
       return state;
   }
 };
 
-export const noteEditReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "A":
-      break;
+// reducer for updating notes
+export const noteUpdateReducer = (state = {}, action) => {
+  switch (action.payload) {
+    case NOTE_UPDATE_REQUEST:
+      return { loading: true };
+
+    case NOTE_UPDATE_SUCCESS:
+      return { loading: false, success: true };
+
+    case NOTE_UPDATE_FAIL:
+      return { loading: false, error: action.payload, success: false };
 
     default:
-      break;
+      return state;
   }
 };
+
+

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { listNotes } from "../../actions/notesActions";
+import { listNotesAction } from "../../actions/notesActions";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error";
 import {
@@ -19,6 +19,7 @@ import { marked } from "marked";
 const MyNotes = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+
   const noteList = useSelector((state) => state.noteList);
   const { loading, notes, error } = noteList;
   console.log(loading, notes, error);
@@ -29,17 +30,20 @@ const MyNotes = () => {
   const noteCreate = useSelector((state) => state.noteCreate);
   const { success: successCreate } = noteCreate;
 
+  const noteUpdate = useSelector((state) => state.noteUpdate);
+  const { success: successUpdate } = noteUpdate;
+
   const deleteHandler = () => {
     if (window.confirm("Are you Sure...?"));
   };
 
   useEffect(() => {
-    dispatch(listNotes());
+    dispatch(listNotesAction());
 
     if (!userInfo) {
       history.push("/");
     }
-  }, [dispatch, history, userInfo, successCreate]);
+  }, [dispatch, history, userInfo, successCreate, successUpdate]);
 
   return (
     <div>
@@ -65,8 +69,8 @@ const MyNotes = () => {
           {error && <Error message={error} />}
           {loading && <Loading />}
           {/* Mapping Cards */}
-          {notes.reverse().map((note) => (
-            <Accordion allowZeroExpanded={true}>
+          {notes?.map((note) => (
+            <Accordion key={note._id} allowZeroExpanded={true}>
               <AccordionItem>
                 <AccordionItemHeading>
                   <AccordionItemButton>
@@ -109,8 +113,8 @@ const MyNotes = () => {
                 </AccordionItemHeading>
 
                 <AccordionItemPanel>
-                  <div class="inline-flex items-center px-2 py-1 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-600 rounded-md hover:bg-green-500 mb-2 ">
-                    <span class="mx-1">{note.category}</span>
+                  <div className="inline-flex items-center px-2 py-1 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-600 rounded-md hover:bg-green-500 mb-2 ">
+                    <span className="mx-1">{note.category}</span>
                   </div>
                   <p
                     dangerouslySetInnerHTML={{

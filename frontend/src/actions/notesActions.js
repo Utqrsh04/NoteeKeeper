@@ -6,10 +6,13 @@ import {
   NOTE_LIST_FAIL,
   NOTE_LIST_REQUEST,
   NOTE_LIST_SUCCESS,
+  NOTE_UPDATE_FAIL,
+  NOTE_UPDATE_REQUEST,
+  NOTE_UPDATE_SUCCESS,
 } from "../constants/noteConstants";
 
 // this func dispatches action for GETTING NOTES LIST
-export const listNotes = () => async (dispatch, getState) => {
+export const listNotesAction = () => async (dispatch, getState) => {
   try {
     // dispatching action when making request for notes list
     dispatch({
@@ -45,7 +48,7 @@ export const listNotes = () => async (dispatch, getState) => {
   }
 };
 
-export const createNote =
+export const createNoteAction =
   (title, content, category) => async (dispatch, getState) => {
     try {
       dispatch({
@@ -89,6 +92,53 @@ export const createNote =
       // dispatching action when error
       dispatch({
         type: NOTE_CREATE_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+export const updateNoteAction =
+  (id, title, content, category) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: NOTE_UPDATE_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      // setting headers for put request
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      console.log("Sending Update Request");
+      // sending request
+      const { data } = await axios.put(
+        `/api/notes/${id}`,
+        { title, content, category },
+        config
+      );
+
+      // dispatching action when note updated successfully
+      dispatch({
+        type: NOTE_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+
+      console.log("Error in Update Note ", message);
+      // dispatching action when error
+      dispatch({
+        type: NOTE_UPDATE_FAIL,
         payload: message,
       });
     }
