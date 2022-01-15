@@ -25,7 +25,7 @@ const Profile = () => {
   const { loading, error, success } = userUpdate;
 
   console.log(loading, error, success);
-  // console.log(name, email, image);
+  console.log(name, email, image);
 
   useEffect(() => {
     if (!userLoginInfo) history.push("/");

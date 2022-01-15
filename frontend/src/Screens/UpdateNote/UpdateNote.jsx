@@ -51,7 +51,6 @@ const UpdateNote = ({ match }) => {
     if (!title || !content || !category) return;
     dispatch(updateNoteAction(id, title, content, category));
 
-    deleteHandler(e);
     history.push("/mynotes");
   };
 
