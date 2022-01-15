@@ -73,11 +73,10 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       image: updatedUser.image,
-      token = generateToken(updatedUser._id)
+      token: generateToken(updatedUser._id),
     });
-  }
-  else{
-    res.status(404)
+  } else {
+    res.status(404);
     throw new Error("User Not Found");
   }
 });

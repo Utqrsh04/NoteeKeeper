@@ -30,6 +30,8 @@ const UpdateNote = ({ match }) => {
     success: successDelete,
   } = noteDelete;
 
+  console.log(loadingDelete, errorDelete);
+
   useEffect(() => {
     const fetching = async () => {
       const { data } = await axios.get(`/api/notes/${id}`);
@@ -62,7 +64,7 @@ const UpdateNote = ({ match }) => {
   };
 
   return (
-    <div>
+    <div className="mb-5">
       <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl ">
         <span className="">Edit Your </span>{" "}
         <span className="text-indigo-600">Note</span>
@@ -76,6 +78,7 @@ const UpdateNote = ({ match }) => {
           onSubmit={updateHandler}
           className="bg-slate-200 pt-2 p-5 rounded-md shadow-lg shadow-slate-200 min-w-full"
         >
+          {loading && <Loading />}
           {error && <Error message={error} />}
           <div>
             <label

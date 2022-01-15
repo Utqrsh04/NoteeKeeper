@@ -8,15 +8,16 @@ import SignupPage from "./Screens/Signup/SignupPage";
 import CreateNote from "./Screens/CreateNote/CreateNote";
 import UpdateNote from "./Screens/UpdateNote/UpdateNote";
 import { useState } from "react";
+import Profile from "./Screens/Profile/Profile";
 
 const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  console.log(searchQuery);
+  // console.log(searchQuery);
   return (
     <>
       <BrowserRouter>
         <Header setSearchQuery={setSearchQuery} />
-        <div className="container w-full md:px-36 px-2 mx-auto py-5">
+        <div className="container bg-gray-100 w-full md:px-36 px-2 mx-auto py-5">
           <Route exact path="/">
             <LandingPage />
           </Route>
@@ -36,6 +37,10 @@ const App = () => {
 
           <Route exact path="/note/:id">
             <UpdateNote />
+          </Route>
+
+          <Route exact path="/profile">
+            <Profile />
           </Route>
         </div>
         <Footer />

@@ -18,7 +18,7 @@ const CreateNote = () => {
 
   const noteCreate = useSelector((state) => state.noteCreate);
 
-  const { loading, error, note } = noteCreate;
+  const { loading, error } = noteCreate;
 
   // submit handler func
   const submitHandler = (e) => {
@@ -47,15 +47,17 @@ const CreateNote = () => {
         <span className="">Create a</span>{" "}
         <span className="text-indigo-600">Note</span>
       </h1>
-      <div className="mx-auto container py-6">
+      <div className="mx-auto container py-5">
         {/* <span className="text-lg font-bold tracking-tight">
           Create a new Note
         </span> */}
 
         <form
           onSubmit={submitHandler}
-          className="bg-slate-200 pt-2 p-5 rounded-md shadow-lg shadow-slate-200 min-w-full"
+          className="bg-slate-300 pt-2 p-5 rounded-md shadow-lg shadow-slate-200 min-w-full"
         >
+          {loading && <Loading />}
+          {error && <Error message={error} />}
           <div>
             <label
               className="text-gray-800 font-semibold block my-3 text-md"

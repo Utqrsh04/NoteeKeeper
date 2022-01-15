@@ -40,10 +40,7 @@ const SignupPage = () => {
 
   // image uploading
   const postDetails = (img) => {
-    if (
-      img ===
-      "https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png"
-    ) {
+    if (!img) {
       return setImageMessage("Please Select an Image");
     }
 
@@ -75,13 +72,9 @@ const SignupPage = () => {
       {error && <Error message={error} />}
       {loading && <Loading />}
       {imageMessage && <Error message={imageMessage} />}
-      <div className="flex mx-auto overflow-hidden bg-slate-800 rounded-lg shadow-lg max-w-4xl">
-        <div className="w-full px-6 py-8 md:px-8 ">
-          {/* <h2 className="text-2xl font-semibold text-center text-gray-700 dark:text-white">
-            Note Keeper
-          </h2> */}
-
-          <p className="text-xl text-center text-gray-600 dark:text-gray-200">
+      <div className="flex mx-auto overflow-hidden mb-10 bg-slate-800 rounded-lg shadow-lg max-w-4xl">
+        <div className="w-full px-6 py-6 md:px-8 ">
+          <p className="text-xl font-bold text-center text-gray-600 dark:text-gray-200">
             Sign up here
           </p>
 
