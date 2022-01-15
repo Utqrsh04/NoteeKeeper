@@ -4,18 +4,20 @@ import { Link, useHistory } from "react-router-dom";
 import { logout } from "../../actions/userActions";
 import "./Header.css";
 
-const Header = () => {
+const Header = ({ setSearchQuery }) => {
   const history = useHistory();
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
   console.log(userInfo);
 
   const logoutHandler = () => {
     dispatch(logout());
     history.push("/");
   };
+
   return (
     <>
       {/* <!-- component --> */}
@@ -54,6 +56,7 @@ const Header = () => {
                   type="text"
                   className="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                   placeholder="Search"
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
             </div>
@@ -124,7 +127,7 @@ const Header = () => {
                       aria-expanded="true"
                       aria-controls="headlessui-menu-items-117"
                     >
-                      <span>User</span>
+                      <span>{userInfo?.name}</span>
                       <svg
                         className="w-5 h-5 ml-2 -mr-1"
                         viewBox="0 0 20 20"
@@ -149,7 +152,7 @@ const Header = () => {
                       <div className="px-4 py-3">
                         <p className="text-sm leading-5">Signed in as</p>
                         <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                          tom@example.com
+                          {userInfo?.email}
                         </p>
                       </div>
                       <div className="py-1">

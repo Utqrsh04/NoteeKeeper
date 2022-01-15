@@ -16,9 +16,11 @@ import "react-accessible-accordion/dist/fancy-example.css";
 
 import { marked } from "marked";
 
-const MyNotes = () => {
+const MyNotes = ({ searchQuery }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  // console.log(searchQuery);
 
   const noteList = useSelector((state) => state.noteList);
   const { loading, notes, error } = noteList;
@@ -34,11 +36,7 @@ const MyNotes = () => {
   const { success: successUpdate } = noteUpdate;
 
   const noteDelete = useSelector((state) => state.noteDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = noteDelete;
+  const { error: errorDelete, success: successDelete } = noteDelete;
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you Sure...?"));
@@ -84,69 +82,75 @@ const MyNotes = () => {
           {error && <Error message={error} />}
           {loading && <Loading />}
           {/* Mapping Cards */}
-          {notes?.map((note) => (
-            <Accordion key={note._id} allowZeroExpanded={true}>
-              <AccordionItem>
-                <AccordionItemHeading>
-                  <AccordionItemButton>
-                    <h1 className="inline font-bold">{note.title}</h1>
+          {notes
+            ?.filter((filteredNote) =>
+              filteredNote.title
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase())
+            )
+            .map((note) => (
+              <Accordion key={note._id} allowZeroExpanded={true}>
+                <AccordionItem>
+                  <AccordionItemHeading>
+                    <AccordionItemButton>
+                      <h1 className="inline font-bold">{note.title}</h1>
 
-                    <div className=" flex justify-end -mt-6">
-                      <div>
-                        <Link
-                          to={`/note/${note._id}`}
-                          className="w-8 h-8 mr-4 rounded-full dark:text-gray-800 bg-blue-400 text-white flex items-center justify-center"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="icon icon-tabler icon-tabler-pencil"
-                            width={20}
-                            height={20}
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                      <div className=" flex justify-end -mt-6">
+                        <div>
+                          <Link
+                            to={`/note/${note._id}`}
+                            className="w-8 h-8 mr-4 rounded-full dark:text-gray-800 bg-blue-400 text-white flex items-center justify-center"
                           >
-                            <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-                            <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-                          </svg>
-                        </Link>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="icon icon-tabler icon-tabler-pencil"
+                              width={20}
+                              height={20}
+                              viewBox="0 0 24 24"
+                              strokeWidth="1.5"
+                              stroke="currentColor"
+                              fill="none"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path stroke="none" d="M0 0h24v24H0z" />
+                              <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                              <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+                            </svg>
+                          </Link>
+                        </div>
+                        <div>
+                          <button
+                            className="w-8 h-8 rounded-full font-extrabold dark:bg-red-400 dark:text-gray-800 bg-gray-800 text-white flex items-center justify-center"
+                            onClick={() => deleteHandler(note._id)}
+                          >
+                            X
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <button
-                          className="w-8 h-8 rounded-full font-extrabold dark:bg-red-400 dark:text-gray-800 bg-gray-800 text-white flex items-center justify-center"
-                          onClick={() => deleteHandler(note._id)}
-                        >
-                          X
-                        </button>
-                      </div>
+                    </AccordionItemButton>
+                  </AccordionItemHeading>
+
+                  <AccordionItemPanel>
+                    <div className="inline-flex items-center px-2 py-1 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-600 rounded-md hover:bg-green-500 mb-2 ">
+                      <span className="mx-1">{note.category}</span>
                     </div>
-                  </AccordionItemButton>
-                </AccordionItemHeading>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: marked.parse(note.content),
+                      }}
+                    ></p>
 
-                <AccordionItemPanel>
-                  <div className="inline-flex items-center px-2 py-1 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-600 rounded-md hover:bg-green-500 mb-2 ">
-                    <span className="mx-1">{note.category}</span>
-                  </div>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: marked.parse(note.content),
-                    }}
-                  ></p>
-
-                  <p className="mt-2 font-semibold text-gray-500 italic text-sm">
-                    Created At -
-                    {note.createdAt.split("T")[0] +
-                      " " +
-                      note.createdAt.substring(11, 19)}
-                  </p>
-                </AccordionItemPanel>
-              </AccordionItem>
-            </Accordion>
-          ))}
+                    <p className="mt-2 font-semibold text-gray-500 italic text-sm">
+                      Created At -
+                      {note.createdAt.split("T")[0] +
+                        " " +
+                        note.createdAt.substring(11, 19)}
+                    </p>
+                  </AccordionItemPanel>
+                </AccordionItem>
+              </Accordion>
+            ))}
         </div>
       </div>
     </div>

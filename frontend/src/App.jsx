@@ -7,34 +7,41 @@ import LoginPage from "./Screens/Login/LoginPage";
 import SignupPage from "./Screens/Signup/SignupPage";
 import CreateNote from "./Screens/CreateNote/CreateNote";
 import UpdateNote from "./Screens/UpdateNote/UpdateNote";
-const App = () => (
-  <>
-    <BrowserRouter>
-      <Header />
-      <div className="container w-full md:px-36 px-2 mx-auto py-5">
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/login" exact>
-          <LoginPage />
-        </Route>
-        <Route path="/signup" exact>
-          <SignupPage />
-        </Route>
-        <Route exact path="/mynotes">
-          <MyNotes />
-        </Route>
+import { useState } from "react";
 
-        <Route exact path="/createnote">
-          <CreateNote />
-        </Route>
+const App = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(searchQuery);
+  return (
+    <>
+      <BrowserRouter>
+        <Header setSearchQuery={setSearchQuery} />
+        <div className="container w-full md:px-36 px-2 mx-auto py-5">
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route path="/login" exact>
+            <LoginPage />
+          </Route>
+          <Route path="/signup" exact>
+            <SignupPage />
+          </Route>
+          <Route exact path="/mynotes">
+            <MyNotes searchQuery={searchQuery} />
+          </Route>
 
-        <Route exact path="/note/:id">
-          <UpdateNote />
-        </Route>
-      </div>
-      <Footer />
-    </BrowserRouter>
-  </>
-);
+          <Route exact path="/createnote">
+            <CreateNote />
+          </Route>
+
+          <Route exact path="/note/:id">
+            <UpdateNote />
+          </Route>
+        </div>
+        <Footer />
+      </BrowserRouter>
+    </>
+  );
+};
+
 export default App;
