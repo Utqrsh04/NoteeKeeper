@@ -2,6 +2,9 @@ import {
   NOTE_CREATE_FAIL,
   NOTE_CREATE_REQUEST,
   NOTE_CREATE_SUCCESS,
+  NOTE_DELETE_FAIL,
+  NOTE_DELETE_REQUEST,
+  NOTE_DELETE_SUCCESS,
   NOTE_LIST_FAIL,
   NOTE_LIST_REQUEST,
   NOTE_LIST_SUCCESS,
@@ -67,4 +70,25 @@ export const noteUpdateReducer = (state = {}, action) => {
   }
 };
 
+// reducer for deleteing notes
+export const noteDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case NOTE_DELETE_REQUEST:
+      return { loading: true };
 
+    case NOTE_DELETE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+
+    case NOTE_DELETE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+        success: false,
+      };
+    default:
+      return state;
+  }
+};

@@ -16,7 +16,7 @@ const UpdateNote = ({ match }) => {
   const history = useHistory();
   const { id } = useParams();
 
-  console.log(id, title, content, category);
+  // console.log(id, title, content, category);
 
   const dispatch = useDispatch();
 
@@ -25,7 +25,6 @@ const UpdateNote = ({ match }) => {
 
   useEffect(() => {
     const fetching = async () => {
-      
       const { data } = await axios.get(`/api/notes/${id}`);
       setTitle(data.title);
       setContent(data.content);

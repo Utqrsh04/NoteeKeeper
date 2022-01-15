@@ -3,6 +3,8 @@ import {
   NOTE_CREATE_FAIL,
   NOTE_CREATE_REQUEST,
   NOTE_CREATE_SUCCESS,
+  NOTE_DELETE_REQUEST,
+  NOTE_DELETE_SUCCESS,
   NOTE_LIST_FAIL,
   NOTE_LIST_REQUEST,
   NOTE_LIST_SUCCESS,
@@ -143,3 +145,44 @@ export const updateNoteAction =
       });
     }
   };
+
+export const noteDeleteAction = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: NOTE_DELETE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    // setting headers for put request
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    console.log("Sending Delete Request");
+    // sending request
+    const { data } = await axios.delete(`/api/notes/${id}`, config);
+
+    // dispatching action when note updated successfully
+    dispatch({
+      type: NOTE_DELETE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    console.log("Error in Delete Note ", message);
+    // dispatching action when error
+    dispatch({
+      type: NOTE_UPDATE_FAIL,
+      payload: message,
+    });
+  }
+};

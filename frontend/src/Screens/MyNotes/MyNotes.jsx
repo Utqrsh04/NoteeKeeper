@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { listNotesAction } from "../../actions/notesActions";
+import { listNotesAction, noteDeleteAction } from "../../actions/notesActions";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error";
 import {
@@ -22,7 +22,7 @@ const MyNotes = () => {
 
   const noteList = useSelector((state) => state.noteList);
   const { loading, notes, error } = noteList;
-  console.log(loading, notes, error);
+  // console.log(loading, notes, error);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -33,8 +33,16 @@ const MyNotes = () => {
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { success: successUpdate } = noteUpdate;
 
-  const deleteHandler = () => {
+  const noteDelete = useSelector((state) => state.noteDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = noteDelete;
+
+  const deleteHandler = (id) => {
     if (window.confirm("Are you Sure...?"));
+    dispatch(noteDeleteAction(id));
   };
 
   useEffect(() => {
@@ -43,7 +51,14 @@ const MyNotes = () => {
     if (!userInfo) {
       history.push("/");
     }
-  }, [dispatch, history, userInfo, successCreate, successUpdate]);
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successCreate,
+    successUpdate,
+    successDelete,
+  ]);
 
   return (
     <div>
