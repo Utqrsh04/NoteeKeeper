@@ -57,7 +57,7 @@ const SignupPage = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("Image Data", data);
+          // console.log("Image Data", data);
           setImage(data.url.toString());
         })
         .catch((err) => console.log(err));

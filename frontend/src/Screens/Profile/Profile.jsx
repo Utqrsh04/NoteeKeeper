@@ -22,10 +22,10 @@ const Profile = () => {
   const history = useHistory();
 
   const userUpdate = useSelector((state) => state.userUpdate);
-  const { loading, error, success } = userUpdate;
+  const { loading, error } = userUpdate;
 
-  console.log(loading, error, success);
-  console.log(name, email, image);
+  // console.log(loading, error, success);
+  // console.log(name, email, image);
 
   useEffect(() => {
     if (!userLoginInfo) history.push("/");
@@ -54,7 +54,7 @@ const Profile = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("Image Data", data);
+          // console.log("Image Data", data);
           setImage(data.url.toString());
         })
         .catch((err) => console.log(err));
@@ -69,6 +69,7 @@ const Profile = () => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
+      // console.log("Update ", name, email, password, image);
       dispatch(updateUser({ name, email, password, image }));
     }
   };
