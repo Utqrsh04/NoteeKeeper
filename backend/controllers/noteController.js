@@ -3,14 +3,14 @@ const Note = require("../models/noteModel");
 
 // func to get all notes of a user by user id
 const getNotes = expressAsyncHandler(async (req, res) => {
-  console.log("Get Notes Called");
+  // console.log("Get Notes Called");
   const notes = await Note.find({ user: req.user._id });
   res.json(notes);
 });
 
 // func to create notes
 const createNotes = expressAsyncHandler(async (req, res) => {
-  console.log("Create Notes Called");
+  // console.log("Create Notes Called");
 
   const { title, content, category } = req.body;
 
@@ -35,7 +35,7 @@ const createNotes = expressAsyncHandler(async (req, res) => {
 
 // func to get single note by id
 const getNoteById = expressAsyncHandler(async (req, res) => {
-  console.log("Get Notes by Id called");
+  // console.log("Get Notes by Id called");
   const note_id = req.params.id;
   const note = await Note.findById(note_id);
 
@@ -48,7 +48,7 @@ const getNoteById = expressAsyncHandler(async (req, res) => {
 
 // func to update a note
 const updateNote = expressAsyncHandler(async (req, res) => {
-  console.log("Update Note Called");
+  // console.log("Update Note Called");
   const note_id = req.params.id;
   const { title, content, category } = req.body;
 
@@ -78,7 +78,7 @@ const updateNote = expressAsyncHandler(async (req, res) => {
 
 // func to delete note
 const deleteNote = expressAsyncHandler(async (req, res) => {
-  console.log("Delete Note Called");
+  // console.log("Delete Note Called");
   const note_id = req.params.id;
 
   const note = await Note.findById(note_id);
