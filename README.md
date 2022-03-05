@@ -1,9 +1,12 @@
 # NoteeKeeper
-## Yet another note keeper app to keep your notes at one place.
+### Yet another note keeper app to keep your notes at one place.
 ==========
+
+
 
 ### The Login Page - 
 Login with your credentials to start saving your important notes
+
 ![](https://github.com/Utqrsh04/NoteeKeeper/blob/main/frontend/src/assests/Login.jpeg)
 
 ### Dashboard Notes Page
@@ -13,10 +16,13 @@ Here you can view all your notes , as well as delete and edit it . There's also 
 
 ### Profile Page
 Here you can update your profile and add your profile picture to it.
+
 ![](https://github.com/Utqrsh04/NoteeKeeper/blob/main/frontend/src/assests/Profile.png)
 
 
-I have used MERN stack for this project and used Redux-Thunk to efficiently manage the state other libraries like bcrypt-js and jsonwebtoken.
+I have used MERN stack for this project and used Redux-Thunk to efficiently manage the state and used tailwindcss for styling 
+and deployed the whole project on heroku . 
+
 
 
 ### Building and running
